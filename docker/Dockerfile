@@ -1,6 +1,6 @@
 # 基础镜像
-# https://hub.docker.com/_/python/tags?page=1&name=3.11-rc-rc-slim
-FROM docker.io/python:3.11-rc-slim
+# https://hub.docker.com/_/python/tags?page=1&name=3.11.9-slim-bullseye
+FROM docker.io/python:3.11.9-slim-bullseye
 
 MAINTAINER myh
 #增加语言utf-8
@@ -24,7 +24,7 @@ trusted-host = pypi.tuna.tsinghua.edu.cn" > /etc/pip.conf && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     echo "Asia/Shanghai" > /etc/timezone && \
     apt-get update && \
-    apt-get install -y cron gcc make python3-dev default-libmysqlclient-dev curl && \
+    apt-get install -y cron gcc make python3-dev default-libmysqlclient-dev build-essential pkg-config curl && \
     pip install supervisor && \
     pip install mysqlclient && \
     pip install requests && \
@@ -50,7 +50,7 @@ trusted-host = pypi.tuna.tsinghua.edu.cn" > /etc/pip.conf && \
     pip install TA-Lib && \
     rm -rf ta-lib* && \
     apt-get --purge remove -y gcc make python3-dev default-libmysqlclient-dev curl && \
-    rm -rf /root/.cache/* && apt-get clean && apt-get autoremove -y
+    rm -rf /root/.cache/* && rm -rf /var/lib/apt/lists/* && apt-get clean && apt-get autoclean && apt-get autoremove -y
 
 WORKDIR /data
 #InStock软件
